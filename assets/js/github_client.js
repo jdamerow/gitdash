@@ -15,7 +15,7 @@ function getRepositories(client) {
     }).done(function(data) {
         for(var i = 0; i < data.length; i++) {
             var obj = data[i];
-            html = '<li><a href="' + obj.html_url + '">' + obj.name + '</a></li>';
+            html = '<li><a target="_blank" href="' + obj.html_url + '">' + obj.name + '</a></li>';
             $( "#repos" ).append(html);
         }
     });
@@ -66,7 +66,7 @@ function getPullRequests(client) {
                     var obj = data2[i];
                     var date = new Date(obj.created_at);
                     var date_str = moment(date).format("MM/DD/YYYY hh:mm:ss a");
-                    $('#pullrequests').bootstrapTable('append', {number: obj.number.toString(), repository: obj.head.repo.name, title: '<a href="' + obj.html_url + '">' + obj.title + '</a>', user: obj.user.login, created: date_str});
+                    $('#pullrequests').bootstrapTable('append', {number: obj.number.toString(), repository: obj.head.repo.name, title: '<a target="_blank" href="' + obj.html_url + '">' + obj.title + '</a>', user: obj.user.login, created: date_str});
                 }
             });
         }
@@ -82,28 +82,28 @@ function getActivity(client) {
             var obj = data[i];
             var label_class = 'label-danger';
             var label_text = obj.type;
-            var text = obj.actor.login + ' on <a href="https://github.com/' + obj.repo.name + '">' + obj.repo.name + '</a>.';
+            var text = obj.actor.login + ' on <a target="_blank"  href="https://github.com/' + obj.repo.name + '">' + obj.repo.name + '</a>.';
             var date = new Date(obj.created_at);
             var date_str = moment(date).format("MM/DD/YYYY hh:mm:ss a");
             if (obj.type == 'PushEvent') {
                 label_class = 'label-primary';
                 label_text = 'Push';
-                text = obj.actor.login + ' pushed to <a href="https://github.com/' + obj.repo.name + '">' + obj.repo.name + '</a>.';
+                text = obj.actor.login + ' pushed to <a target="_blank"  href="https://github.com/' + obj.repo.name + '">' + obj.repo.name + '</a>.';
             }
             else if (obj.type == 'PullRequestEvent') {
                 label_class = 'label-warning';
                 label_text = 'Pull Request';
-                text = obj.actor.login + ' created a pull request on <a href="' + obj.payload.pull_request.html_url + '">' + obj.repo.name + '</a>.';
+                text = obj.actor.login + ' created a pull request on <a target="_blank"  href="' + obj.payload.pull_request.html_url + '">' + obj.repo.name + '</a>.';
             }
             else if (obj.type == 'PullRequestReviewCommentEvent') {
                 label_class = 'label-info';
                 label_text = 'PR Comment';
-                text = obj.actor.login + ' commented on <a href="' + obj.payload.pull_request.html_url + '"> pull request #' + obj.payload.pull_request.number + '</a> for repository <a href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a> saying "' + obj.payload.comment.body + '".';
+                text = obj.actor.login + ' commented on <a target="_blank"  href="' + obj.payload.pull_request.html_url + '"> pull request #' + obj.payload.pull_request.number + '</a> for repository <a target="_blank"  href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a> saying "' + obj.payload.comment.body + '".';
             }
             else if (obj.type == 'IssueCommentEvent') {
                 label_class = 'label-success';
                 label_text = 'Issue Comment';
-                text = obj.actor.login + ' commented on <a href="' + obj.payload.issue.html_url + '">' + obj.payload.issue.title + '</a> for repository <a href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a> saying "' + obj.payload.comment.body + '".';
+                text = obj.actor.login + ' commented on <a href="' + obj.payload.issue.html_url + '">' + obj.payload.issue.title + '</a> for repository <a target="_blank"  href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a> saying "' + obj.payload.comment.body + '".';
             }
             html = '<p><span class="label ' + label_class + '">' + label_text + '</span> <small>[' + date_str + ']</small> ' + text + '</p>';
             $( "#activityList" ).append(html);
