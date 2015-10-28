@@ -83,6 +83,8 @@ function getActivity(client) {
             var label_class = 'label-danger';
             var label_text = obj.type;
             var text = obj.actor.login + ' on <a href="https://github.com/' + obj.repo.name + '">' + obj.repo.name + '</a>.';
+            var date = new Date(obj.created_at);
+            var date_str = moment(date).format("MM/DD/YYYY hh:mm:ss a");
             if (obj.type == 'PushEvent') {
                 label_class = 'label-primary';
                 label_text = 'Push';
@@ -103,7 +105,7 @@ function getActivity(client) {
                 label_text = 'Issue Comment';
                 text = obj.actor.login + ' commented on <a href="' + obj.payload.issue.html_url + '">' + obj.payload.issue.title + '</a> for repository <a href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a> saying "' + obj.payload.comment.body + '".';
             }
-            html = '<p><span class="label ' + label_class + '">' + label_text + '</span> ' + text + '</p>';
+            html = '<p><span class="label ' + label_class + '">' + label_text + '</span> <small>[' + date_str + ']</small> ' + text + '</p>';
             $( "#activityList" ).append(html);
         }
     });
