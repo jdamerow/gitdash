@@ -68,17 +68,8 @@
           <h1 class="page-header">Dashboard</h1>
           <h2 class="sub-header">Open Pull Requests</h2>
           <div class="table-responsive">
-            <table id="pullrequests" class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Repository</th>
-                  <th>Title</th>
-                  <th>User</th>
-                  <th>Created</th>
-                </tr>
-              </thead>
-              </tbody>
+            <table id="pullrequests">
+
             </table>
           </div>
         </div>
@@ -91,6 +82,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="assets/bootstrap-3.3.5//js/bootstrap.min.js"></script>
     <script src="assets/js/github_client.js"></script>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="assets/bootstrap-table/bootstrap-table.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="assets/bootstrap-table/bootstrap-table.min.js"></script>
 
     <script type="text/javascript">
     $(document).ready(function () {
