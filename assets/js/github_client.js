@@ -72,5 +72,39 @@ function getPullRequests(client) {
         }
 
     });
+}
 
+function getActivity(client) {
+    $.ajax({
+        url: client.github + "orgs/"+ client.org + "/events",
+    }).done(function(data) {
+        for(var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            var label_class = 'label-danger';
+            var label_text = obj.type;
+            var text = obj.actor.login + ' on <a href="https://github.com/' + obj.repo.name + '">' + obj.repo.name + '</a>.';
+            if (obj.type == 'PushEvent') {
+                label_class = 'label-primary';
+                label_text = 'Push';
+                text = obj.actor.login + ' pushed to <a href="https://github.com/' + obj.repo.name + '">' + obj.repo.name + '</a>.';
+            }
+            else if (obj.type == 'PullRequestEvent') {
+                label_class = 'label-warning';
+                label_text = 'Pull Request';
+                text = obj.actor.login + ' created a pull request on <a href="' + obj.payload.pull_request.html_url + '">' + obj.repo.name + '</a>.';
+            }
+            else if (obj.type == 'PullRequestReviewCommentEvent') {
+                label_class = 'label-info';
+                label_text = 'PR Comment';
+                text = obj.actor.login + ' commented on <a href="' + obj.payload.pull_request.html_url + '"> pull request #' + obj.payload.pull_request.number + '</a> for repository <a href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a> saying "' + obj.payload.comment.body + '".';
+            }
+            else if (obj.type == 'IssueCommentEvent') {
+                label_class = 'label-success';
+                label_text = 'Issue Comment';
+                text = obj.actor.login + ' commented on <a href="' + obj.payload.issue.html_url + '">' + obj.payload.issue.title + '</a> for repository <a href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a> saying "' + obj.payload.comment.body + '".';
+            }
+            html = '<p><span class="label ' + label_class + '">' + label_text + '</span> ' + text + '</p>';
+            $( "#activityList" ).append(html);
+        }
+    });
 }

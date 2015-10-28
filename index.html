@@ -72,6 +72,12 @@
 
             </table>
           </div>
+
+          <h2 class="sub-header">Activity</h2>
+          <div id="activityList">
+
+          </div>
+
         </div>
       </div>
     </div>
@@ -94,6 +100,7 @@
         var client = new GithubClient("diging");
         getRepositories(client);
         getPullRequests(client);
+        getActivity(client);
     });
     //# sourceURL=dynamicScript.js
     </script>
