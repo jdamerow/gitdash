@@ -41,7 +41,9 @@ function getPullRequests(client) {
 
                 for(var i = 0; i < data2.length; i++) {
                     var obj = data2[i];
-                    data_json.push({number: obj.number.toString(), repository: obj.head.repo.name, title: '<a href="' + obj.html_url + '">' + obj.title + '</a>', user: obj.user.login, created: obj.created_at});
+                    var date = new Date(obj.created_at);
+                    var date_str = moment(date).format("MM/DD/YYYY hh:mm:ss a");
+                    data_json.push({number: obj.number.toString(), repository: obj.head.repo.name, title: '<a href="' + obj.html_url + '">' + obj.title + '</a>', user: obj.user.login, created: date_str});
                 }
             });
         }
