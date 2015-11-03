@@ -93,7 +93,8 @@ function getActivity(client) {
             else if (obj.type == 'PullRequestEvent') {
                 label_class = 'label-warning';
                 label_text = 'Pull Request';
-                text = obj.actor.login + ' created a pull request on <a target="_blank"  href="' + obj.payload.pull_request.html_url + '">' + obj.repo.name + '</a>.';
+                action = obj.payload.action;
+                text = obj.actor.login + ' ' + action + ' a pull request on <a target="_blank"  href="' + obj.payload.pull_request.html_url + '">' + obj.repo.name + '</a>.';
             }
             else if (obj.type == 'PullRequestReviewCommentEvent') {
                 label_class = 'label-info';
@@ -104,6 +105,11 @@ function getActivity(client) {
                 label_class = 'label-success';
                 label_text = 'Issue Comment';
                 text = obj.actor.login + ' commented on <a href="' + obj.payload.issue.html_url + '">' + obj.payload.issue.title + '</a> for repository <a target="_blank"  href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a> saying "' + obj.payload.comment.body + '".';
+            }
+            else if (obj.type == 'CreateEvent') {
+                label_class = 'label-success';
+                label_text = 'Creation';
+                text = obj.actor.login + ' created ' + obj.payload.ref_type + ' "' + obj.payload.ref + '" for repository <a target="_blank"  href="https://github.com/' +  obj.repo.name + '">' + obj.repo.name + '</a>';
             }
             html = '<p><span class="label ' + label_class + '">' + label_text + '</span> <small>[' + date_str + ']</small> ' + text + '</p>';
             $( "#activityList" ).append(html);
